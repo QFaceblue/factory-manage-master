@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}全体员工{% endblock %}
+{% block title %}消息{% endblock %}
 {% if user.is_authenticated %}
                     {% if user_get_staff_type == '经理' %}
                         {% block nav_staff_active %}active{% endblock %}
