@@ -186,7 +186,7 @@ def set_staff_type(self,type):
         profile = Profile.objects.get(user=self)
         profile.staff_type=type
 
-
+#给User添加函数
 User.get_staff_age = get_staff_age
 User.get_staff_gender = get_staff_gender
 User.get_staff_type = get_staff_type

@@ -602,7 +602,7 @@ def leapyear(year):
 
 def caculate_salary(request):
     days_1 = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    days_2 = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    days_2 = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]#闰年
     users = User.objects.all()
     date = time.strftime('%Y-%m', time.localtime(time.time()))#当前月份 日期
     # if int(date[-2:]) > 1:#一月份的上一个是去年12月
