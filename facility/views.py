@@ -4,6 +4,7 @@ from .forms import BaoxiuForm,FacilityForm, FacilitySelectForm, MaintainAppendFo
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models import Q
+from factory.settings import DEFAULT_FROM_EMAIL
 from django.core.mail import send_mail
 
 
@@ -32,8 +33,7 @@ def baoxiu(request,user_pk):
             user_tel = ur.get_staff_tel()
             add = Repair(facility_id=faci_tem, baoxiu_staff_name=ur, baoxiu_staff_tel=user_tel, baoxiu_complementary=question )
             add.save()
-            send_mail('Subject here', '有一个故障需要您取处理.', 'liujinhao0519@163.com',
-                      ['liujinhao@secrul.cn'], fail_silently=False)
+            send_mail('Subject here', '有一个故障需要您取处理.', DEFAULT_FROM_EMAIL,['517568768@qq.com'], fail_silently=False)
             return redirect(reverse('baoxiu_list'))
     else:
         baoxiu_form  = BaoxiuForm()

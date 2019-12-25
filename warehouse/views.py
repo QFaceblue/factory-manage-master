@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models import Q
+from factory.settings import DEFAULT_FROM_EMAIL
 from django.core.mail import send_mail
 
 
@@ -59,8 +60,7 @@ def sanction(request, apply_pk, user_pk):
         apply_tem = PurchaseList.objects.get(pk=apply_pk)
         apply_tem.sanction_staff_name = ur
         apply_tem.save()
-        send_mail('Subject here', '有一个采购申请请您处理.', 'liujinhao0519@163.com',
-                  ['liujinhao@secrul.cn'], fail_silently=False)
+        send_mail('Subject here', '有一个采购申请请您处理.', DEFAULT_FROM_EMAIL,['517568768@qq.com'], fail_silently=False)
         return redirect(reverse('sanction_list'))
     else:
         return redirect(reverse('login'))
