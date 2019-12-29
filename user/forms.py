@@ -2,6 +2,8 @@ from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.forms import widgets
+from django.utils import timezone
+
 from .models import Position
 
 class LoginForm(forms.Form):
@@ -392,6 +394,16 @@ class AttendenceForm(forms.Form):
         initial='False',
         widget=widgets.RadioSelect,
         choices=(('False','否'),('True','是'))
+    )
+    start_time = forms.DateTimeField(
+        label='上班时间',
+        initial=timezone.now(),
+        widget=forms.DateTimeInput(attrs={})
+    )
+    end_time = forms.DateTimeField(
+        label='下班时间',
+        initial=timezone.now(),
+        widget=forms.DateTimeInput(attrs={})
     )
     supplement= forms.CharField(
         label='说明',

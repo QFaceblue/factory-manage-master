@@ -30,8 +30,10 @@ class Attendance(models.Model):#考勤
     staff_name = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="姓名")
     flag_leave = models.BooleanField(default=False, verbose_name="请假")
     flag_business = models.BooleanField(default=False, verbose_name="出差")
-    start_time = models.DateTimeField(auto_now_add=True, verbose_name="上班时间")
-    end_time = models.DateTimeField(verbose_name="下班时间",auto_now=True)
+    # start_time = models.DateTimeField(auto_now_add=True, verbose_name="上班时间")
+    # end_time = models.DateTimeField(verbose_name="下班时间",auto_now=True)
+    start_time = models.DateTimeField(verbose_name="上班时间")
+    end_time = models.DateTimeField(verbose_name="下班时间")
     supplement = models.CharField(max_length=100, verbose_name="补充", null=True, default='无',blank=True)
 
     class Meta:

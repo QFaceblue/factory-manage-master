@@ -30,8 +30,8 @@ class OrderForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入总价'})
     )
     order_end = forms.DateField(
-        label='交货时间(格式：xxxx-xx-xx)',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入交货时间'})
+        label='交货时间',
+        widget=forms.DateInput(attrs={'type':'date','class': 'form-control', 'placeholder': '请输入交货时间'})
     )
     order_supplement  = forms.CharField(
         label='详细要求',

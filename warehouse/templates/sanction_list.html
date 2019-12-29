@@ -25,6 +25,7 @@
                          <th scope="col">申请人</th>
                         <th scope="col">申请时间</th>
                         <th scope="col">批准</th>
+                        <th scope="col">拒绝</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -36,6 +37,7 @@
                         <td>{{purchaselist.apply_staff_name}}</td>
                       <td>{{purchaselist.apply_date}}</td>
                         <td><a href="{% url 'sanction' purchaselist.pk user.pk%}">批准</a></td>
+                           <td> <a href="{% url 'pc_delete' purchaselist.pk %}">拒绝</a></td>
                     </tr>
                   {% endfor %}
                   </tbody>

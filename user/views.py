@@ -263,8 +263,10 @@ def attendence_append(request):
                 flag_leave = AttendenceForms.cleaned_data['flag_leave']
                 flag_business = AttendenceForms.cleaned_data['flag_business']
                 supplement = AttendenceForms.cleaned_data['supplement']
+                start_time = AttendenceForms.cleaned_data['start_time']
+                end_time = AttendenceForms.cleaned_data['end_time']
                 add = Attendance(staff_name=user_tem, flag_leave=flag_leave,
-                                   flag_business=flag_business, supplement=supplement)
+                                   flag_business=flag_business,start_time=start_time,end_time=end_time, supplement=supplement)
                 add.save()
                 return redirect(reverse('attendence_lists'))
         else:
@@ -298,6 +300,8 @@ def attendence_modify(request, attendence_pk):
                 Attendance_tem.staff_name = user_tem
                 Attendance_tem.flag_leave = AttendenceForms.cleaned_data['flag_leave']
                 Attendance_tem.flag_business = AttendenceForms.cleaned_data['flag_business']
+                Attendance_tem.start_time = AttendenceForms.cleaned_data['start_time']
+                Attendance_tem.end_time = AttendenceForms.cleaned_data['end_time']
                 Attendance_tem.supplement = AttendenceForms.cleaned_data['supplement']
 
                 Attendance_tem.save()
@@ -614,7 +618,7 @@ def caculate_salary(request):
     # if date[-2] == '-':
     #     date = date[:-1] + '0' + date[-1]
     print(date)
-    attend_tems = Attendance.objects.filter(current_time__contains=date)
+    attend_tems = Attendance.objects.filter(current_time__contains=date)#获取本月考勤
     for user in users:
         salary_pre_hour = user.get_salary_pre_hour()
         attend_days = 0
@@ -640,14 +644,14 @@ def caculate_salary(request):
                     if attend_tem.flag_business:#出差
                         business_days += 1
                     else:
-                        hour = str(attend_tem.start_time)[11:13]
-                        if hour < '23':#迟到
+                        hour = int(str(attend_tem.start_time)[11:13])
+                        if hour > 1:#迟到
                             late_days += 1
-                        hour1 = int(str(attend_tem.start_time)[11:13])
+                        hour1 = int(str(attend_tem.end_time)[11:13])
                         if hour1 < 9:#早退
                             zaotui_days += 1
                         else:
-                            overtime += (hour1 -1)#加班时长
+                            overtime += (hour1 -9)#加班时长
         if leapyear(int(str(date[0:4]))):
             absent_days += (days_2[int(str(date[-2:]))-1] - attend_days - leave_days)
         else:
@@ -657,8 +661,8 @@ def caculate_salary(request):
         allowance += (attend_days * 20)
         overtime_salary += (overtime * salary_pre_hour * 2)
         should_pay += (base_salary + allowance + overtime - kouchu)
-        if should_pay > 4000:
-            tax += int((should_pay - 4000) * 0.1)
+        if should_pay > 5000:
+            tax += int((should_pay - 5000) * 0.1)
         else:
             tax = 0
         actual_pay += (should_pay - tax)
@@ -685,5 +689,5 @@ def caculate_salary(request):
                          base_salary=base_salary, overtime_salary=overtime_salary, kouchu=kouchu, allowance=allowance,
                          should_pay=should_pay, tax=tax, actual_pay=actual_pay)
             add.save()
-    send_mail('Subject', '工资已经发放，请查收.', DEFAULT_FROM_EMAIL,['517568768@qq.com'], fail_silently=False)
+    # send_mail('Subject', '工资已经发放，请查收.', DEFAULT_FROM_EMAIL,['517568768@qq.com'], fail_silently=False)
     return redirect(reverse('salary_lists'))

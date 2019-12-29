@@ -35,8 +35,7 @@ def apply(request,user_pk):
             number = apply_form.cleaned_data['number']
             add = PurchaseList(good_name=facility, good_version=version, good_num=number, apply_staff_name=ur)
             add.save()
-            # send_mail('Subject here', '有一个采购申请请您批准.', 'liujinhao0519@163.com',
-            #           ['liujinhao@secrul.cn'], fail_silently=False)
+            send_mail('Subject', '有一个采购申请请您批准.',  DEFAULT_FROM_EMAIL,['517568768@qq.com'], fail_silently=False)
             return redirect(reverse('home'))
     else:
         apply_form  = ApplyForm()
@@ -60,11 +59,19 @@ def sanction(request, apply_pk, user_pk):
         apply_tem = PurchaseList.objects.get(pk=apply_pk)
         apply_tem.sanction_staff_name = ur
         apply_tem.save()
-        send_mail('Subject here', '有一个采购申请请您处理.', DEFAULT_FROM_EMAIL,['517568768@qq.com'], fail_silently=False)
+        send_mail('Subject', '有一个采购申请被批准.', DEFAULT_FROM_EMAIL,['517568768@qq.com'], fail_silently=False)
         return redirect(reverse('sanction_list'))
     else:
         return redirect(reverse('login'))
 
+def pc_delete(request, apply_pk):
+    user = request.user
+    if user.is_authenticated:
+        pl = PurchaseList.objects.get(pk=apply_pk)
+        pl.delete()
+        return redirect(reverse('sanction_list'))
+    else:
+        return redirect(reverse('login'))
 
 def buy_list(request):
     purchaselists = PurchaseList.objects.filter(~Q(sanction_staff_name=None), Q(buyer_name=None) )

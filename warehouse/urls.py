@@ -18,6 +18,7 @@ urlpatterns = [
     path('apply/<int:user_pk>', views.apply, name='apply'),
     path('sanction_list/', views.sanction_list, name='sanction_list'),
     path('sanction/<int:apply_pk>/<int:user_pk>', views.sanction, name='sanction'),
+    path('pc_delete/<int:apply_pk>', views.pc_delete, name='pc_delete'),
     path('buy_list/', views.buy_list, name='buy_list'),
     path('price/<int:apply_pk>/<int:user_pk>', views.price, name='price'),
     path('buyed_list/', views.buyed_list, name='buyed_list'),

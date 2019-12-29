@@ -3,35 +3,54 @@
 {% block title %}考勤{% endblock %}
 
 {% block content %}
-    <div class="containter">
-        <div class="row">
-            <div class="col-xs-4 col-xs-offset-4">
-                {% if user.is_authenticated %}
-                    <div class="panel panel-default" style="margin-top: 2em">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">增加</h3>
-                        </div>
-                        <div class="panel-body">
-                            <form action="" method="POST">
-                                {% csrf_token %}
-                                {% for field in AttendenceForms %}
-                                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                    {{ field }}
-                                    <p class="text-danger">{{ field.errors.as_text }}</p>
-                                {% endfor %}
-                                <span class="text-danger">{{ login_form.non_field_errors }}</span>
-                                <div class="clearfix"></div>
-                                <input type="button" value="取消" class="btn btn-primary pull-left">
-                                <input type="submit" value="提交" class="btn btn-primary pull-right">
-                            </form>
-                        </div>
-                    </div>
-                {% else %}
-                    <script type="text/javascript">
-                        window.location.href = '/';
-                    </script>
-                {% endif %}              
+<div class="containter">
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+            {% if user.is_authenticated %}
+            <div class="panel panel-default" style="margin-top: 2em">
+                <div class="panel-heading">
+                    <h3 class="panel-title">增加</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% for field in AttendenceForms %}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        <p class="text-danger">{{ field.errors.as_text }}</p>
+                        {% endfor %}
+                        <span class="text-danger">{{ login_form.non_field_errors }}</span>
+                        <div class="clearfix"></div>
+                        <input type="button" value="取消" class="btn btn-primary pull-left">
+                        <input type="submit" value="提交" class="btn btn-primary pull-right">
+                    </form>
+                </div>
             </div>
+            {% else %}
+            <script type="text/javascript">
+                        window.location.href = '/';
+
+            </script>
+            {% endif %}
         </div>
-    </div>    
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+
+<!-- XDSoft DateTimePicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+  <script>
+$(function () {
+      $("#id_start_time").datetimepicker( {
+         format:'Y-m-d H:i',
+      });
+      $("#id_end_time").datetimepicker( {
+         format:'Y-m-d H:i',
+      });
+    });
+  </script>p
+
+</script>
 {% endblock %}
