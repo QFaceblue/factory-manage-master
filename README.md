@@ -8,7 +8,7 @@
   Pytz 2019.1
 
  
-感谢B站杨仕航大佬，基本是借鉴大佬的视频完成的；https://www.bilibili.com/video/av16957624/
+该项目此项目上进行更改https://github.com/secrul/factory-manage.git
 
 初始账号：test 密码:asdfzxcv    在所有员工页面可以看到全部账号，并且所有密码都是这个。
 
